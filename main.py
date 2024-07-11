@@ -13,7 +13,7 @@ from data import *
 logging.basicConfig(level=logging.INFO)
 
 # Замените "YOUR_BOT_TOKEN" на токен, который вы получили от BotFather
-API_TOKEN = '6727795477:AAG-Vd64ap2Ugx9iuhduTKI8rqL0b9BPJPU'
+API_TOKEN = ''
 
 # Объект бота
 bot = Bot(token=API_TOKEN)
@@ -160,6 +160,7 @@ async def wrong_answer(callback: types.CallbackQuery):
     current_question_index = await get_quiz_index(callback.from_user.id)
     correct_option = quiz_data[current_question_index]['correct_option']
     current_score = await get_user_score(callback.from_user.id)
+
     await callback.message.answer(f"Неправильно. Правильный ответ: {quiz_data[current_question_index]['options'][correct_option]}")
 
     # Обновление номера текущего вопроса в базе данных
@@ -171,7 +172,7 @@ async def wrong_answer(callback: types.CallbackQuery):
     if current_question_index < len(quiz_data):
         await get_question(callback.message, callback.from_user.id)
     else:
-        await callback.message.answer("Это был последний вопрос. Квиз завершен!\n Ваш результат: {current_score} правильных ответов")
+        await callback.message.answer(f"Это был последний вопрос. Квиз завершен!\n Ваш результат: {current_score} правильных ответов")
 
 
 
